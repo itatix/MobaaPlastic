@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.actions.act_window" id="meli_action_list_logs">
+        <field name="name">Logs</field>
+        <field name="res_model">meli.logs</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Crea tu primer MercadoLibre List
+            </p>
+        </field>
+    </record>
+
+    <record id="pedidos_TREE_logs" model="ir.ui.view">
+        <field name="name">Pedidos.view</field>
+        <field name="model">meli.logs</field>
+        <field name="arch" type="xml">
+            <tree string="MercadoLibre Server">
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="description"/>
+            <field name="state"/>
+                <field name="meli_list"/>
+                <field name="server"/>
+            </tree>
+        </field>
+    </record>
+    <menuitem action="meli_action_list_logs" id="meli_list_logs" parent="meli_config" sequence="90"/>
+
+</odoo>

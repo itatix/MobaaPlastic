@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+meli_synchro_instance,meli.odoo.mercadolibre,model_meli_synchro_instance,,1,1,1,1
+meli_action_list,action_list,model_meli_action_list,,1,1,0,0
+logs,logs,model_meli_logs,,1,1,1,1
+questions,questions,model_meli_questions,,1,1,1,1

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inicio Herencia Clientes -->
+    <record id="clientes_meli_herencia" model="ir.ui.view">
+           <field name="name">Clientes.view</field>
+           <field name="model">res.partner</field>
+           <field name="inherit_id" ref="base.view_partner_tree"/>
+           <field name="arch" type="xml">
+              <xpath expr="//field[@name='email']" position="after">
+                   <field name="server_meli" string="Meli Instance" attrs="{'invisible': [('server_meli', '=', False)]}" />
+                   <field name="id_app" string="Meli ID" attrs="{'invisible': [('server_meli', '=', False)]}" />
+              </xpath>
+           </field>
+    </record>
+
+    <record id="clientes_meli_kanban_herencia" model="ir.ui.view">
+        <field name="name">Clientes.Kanvan.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_details']" position="after">
+                <div t-if="record.server_meli.value">
+                    <i class="fa fa-fw fa-spinner"/>
+                    <field name="server_meli"  />
+                 </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="clientes_form_herencia_meli" model="ir.ui.view">
+        <field name="name">Clientes.Form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="server_meli" string="Meli Instance" attrs="{'invisible': [('server_meli', '=', False)]}" readonly="1" />
+                <field name="id_app" string="Meli ID" attrs="{'invisible': [('server_meli', '=', False)]}" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="customer_meli" model="ir.actions.act_window">
+        <field name="name">Customer Woo</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('server_meli','!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Meli
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_customer_meli_confi" action="customer_meli"
+              parent="odoo-mercadolibre.meli_main_list_sync" name="Customers"/>
+
+</odoo>

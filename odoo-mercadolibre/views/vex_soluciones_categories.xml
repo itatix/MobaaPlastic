@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inicio Herencia Categorias -->
+    <record id="categorias_meli_herencia2" model="ir.ui.view">
+           <field name="name">Categorias.tree</field>
+           <field name="model">product.public.category</field>
+           <field name="inherit_id" ref="website_sale.product_public_category_tree_view"/>
+           <field name="arch" type="xml">
+              <xpath expr="//field[@name='display_name']" position="after">
+                   <field name="server_meli" string="Meli Server" attrs="{'invisible': [('server_meli', '=', False)]}" />
+                   <field name="id_app" string="Meli ID" attrs="{'invisible': [('server_meli', '=', False)]}" />
+              </xpath>
+           </field>
+    </record>
+
+    <record id="categorias_meli_herencia" model="ir.ui.view">
+        <field name="name">categorias.herencia.Form</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+        <field name="arch" type="xml">
+               <xpath expr="//field[@name='sequence']" position="after">
+                    <field name="server_meli" string="Meli Instance"  readonly="1" />
+                    <field name="id_app" string="Meli ID"  readonly="1" />
+            </xpath>
+        </field>
+
+    </record>
+
+    <record id="categories_meli" model="ir.actions.act_window">
+        <field name="name">Category Mercado Libre</field>
+        <field name="res_model">product.public.category</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[('server_meli','!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new cupon
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_categories_confi_meli" action="categories_meli"
+            parent="odoo-mercadolibre.meli_main_list_sync" name="Categories"/>
+
+</odoo>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- MENU PRINCIPAL -->
+    <menuitem id="meli_config" name="MercadoLibre" sequence="1"  />
+    <menuitem id="meli_main_list_sync" name="Synchronized" sequence="2"  parent="odoo-mercadolibre.meli_config" />
+
+    <!-- VISTA TREE -->
+    <record id="view_base_meli_instance_tree" model="ir.ui.view">
+        <field name="name">meli.synchro.instance.tree</field>
+        <field name="model">meli.synchro.instance</field>
+        <field name="arch" type="xml">
+            <tree string="MercadoLibre Instance">
+                <field name="name"/>
+                <field name="active_automatic"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="meli_instance_form_view">
+            <field name="name">meli.synchro.instance.form</field>
+            <field name="model">meli.synchro.instance</field>
+            <field name="arch" type="xml">
+                <form string="Meli Server Form">
+                    <sheet>
+                    	<div class="oe_button_box" name="button_box">
+                            <button name="fun_test" type="object" class="oe_stat_button" icon="fa-spinner">
+                                Test Connection
+                            </button>
+                        </div>
+                        <group>
+                             <group>
+                                  <field name="name" />
+                                  <h2>Application</h2>
+                                  <field name="app_id" />
+                                  <field name="secret_key" />
+
+                                  <h2>User ID</h2>
+                                  <field name="nick" />
+                                  <field name="meli_country"/>
+                                  <button name="get_user" type="object"
+                                          class="btn-primary" icon="fa-spinner"
+                                          attrs="{'invisible': [('meli_country', '=', False)]}"
+                                  >
+                                       Get User ID
+                                  </button>
+                                  <field name="user_id" />
+
+                             </group>
+                             <group>
+                                 <h2>Keys</h2>
+                                 <field name="server_code" />
+                                 <button name="get_token" type="object"
+                                          class="btn-primary" icon="fa-spinner"
+                                          attrs="{'invisible': [('meli_country', '=', False)]}"
+                                  >
+                                       Get Token
+                                  </button>
+                                 <field name="access_token" />
+                                 <field name="refresh_token" />
+                                 <field name="redirect_uri" />
+                             </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Configuration">
+                                <div class="row">
+                                     <div class="col-6">
+                                         <group><!--
+                                               <field name="orders_status"  string="Import Orders Status"
+                                                  widget="many2many_tags" />-->
+                                               <field name="import_products_paused"/>
+                                               <field name="all_orders" invisible="1"/>
+                                               <field name="company"/>
+                                               <field name="active_automatic"/>
+                                             <!--
+                                               <field name="order_after"
+                                                      attrs="{'invisible': [('all_orders', '=',True)] }" />
+                                             -->
+                                        </group>
+                                     </div>
+                                      <div class="col-6">
+                                          <group>
+                                              <field name="picking_policy" />
+                                              <field name="default_currency" />
+                                              <field name="warehouse" />
+                                              <field name="pricelist" />
+                                          </group>
+                                      </div>
+                                </div>
+                           </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+    </record>
+
+    <record id="action_meli_synchro_instance" model="ir.actions.act_window">
+        <field name="name">Instances</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">meli.synchro.instance</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem action="action_meli_synchro_instance" id="meli_synchro_instance_menu_id"
+              parent="meli_config"/>
+
+    <!-- VISTA FORM -->
+
+
+</odoo>

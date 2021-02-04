@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_product_meli_herencia" model="ir.ui.view">
+           <field name="name">Product.view</field>
+           <field name="model">product.product</field>
+           <field name="inherit_id" ref="product.product_product_tree_view"/>
+           <field name="arch" type="xml">
+               <xpath expr="//tree" position="attributes">
+	                 <attribute name="decoration-danger">active==False</attribute>
+               </xpath>
+              <xpath expr="//field[@name='name']" position="after">
+                   <field name="server_meli"  attrs="{'invisible': [('server_meli', '=', False)]}" />
+                   <field name="id_app"  attrs="{'invisible': [('server_meli', '=', False)]}" />
+                   <field name="id_app_varition"  attrs="{'invisible': [('server_meli', '=', False)]}" />
+                  <field name="meli_regular_price"  attrs="{'invisible': [('server_meli', '=', False)]}" />
+              </xpath>
+           </field>
+    </record>
+
+    <record id="variante_meli_FORM_herencia" model="ir.ui.view">
+           <field name="name">Product.Form</field>
+           <field name="model">product.product</field>
+           <field name="inherit_id" ref="product.product_normal_form_view"/>
+           <field name="arch" type="xml">
+           	   <xpath expr="//field[@name='barcode']" position="after">
+                       <field name="server_meli" string="Meli Server" readonly="0"/>
+                       <field name="id_app" string="Meli ID" readonly="0" />
+                       <field name="id_app_varition" string="Variation ID" readonly="0" />
+	           </xpath>
+           </field>
+    </record>
+
+    <record id="product_template_variants_meli" model="ir.actions.act_window">
+        <field name="name">Product Template Meli</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('server_meli','!=', False),'|',('active','!=', False),('active','!=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Product Template
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_variants_template_meli" action="product_template_variants_meli"
+              parent="odoo-mercadolibre.meli_main_list_sync" name="Products Variants"/>
+</odoo>

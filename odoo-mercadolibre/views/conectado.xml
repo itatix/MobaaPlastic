@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="meli_ok" model="ir.ui.view">
+        <field name="name">Import Finish Synchronization</field>
+        <field name="model">meli.action.synchro</field>
+        <field name="arch" type="xml">
+            <form string="Synchronization Completed!">
+                <separator string="Synchronization has finished successfully"/>
+                <footer>
+                    <button string="Ok" class="oe_highlight" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

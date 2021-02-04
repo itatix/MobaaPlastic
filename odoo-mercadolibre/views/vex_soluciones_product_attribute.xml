@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!-- Inicio Vistas attributes -->
+    <record id="attributes_tree_meli_herencia_meli" model="ir.ui.view">
+           <field name="name">Attributesmeli.view</field>
+           <field name="model">product.attribute</field>
+           <field name="inherit_id" ref="product.attribute_tree_view"/>
+           <field name="arch" type="xml">
+              <xpath expr="//field[@name='create_variant']" position="after">
+                   <field name="server_meli" string="Meli Server" attrs="{'invisible': [('server_meli', '=', False)]}" />
+                   <field name="id_app" string="Meli ID" attrs="{'invisible': [('server_meli', '=', False)]}" />
+                   <field name="id_product" string="Product ID" readonly="1" attrs="{'invisible': [('server_meli', '=', False)]}"/>
+              </xpath>
+           </field>
+    </record>
+
+    <record id="attributes_tree_meli_herencia" model="ir.ui.view">
+           <field name="name">Attributes.form</field>
+           <field name="model">product.attribute</field>
+           <field name="inherit_id" ref="product.product_attribute_view_form"/>
+           <field name="arch" type="xml">
+              <xpath expr="//group[1]" position="after">
+                  <group>
+                   <field name="server_meli" string="Meli Server"  readonly="1"/>
+                   <field name="id_app" string="Meli ID" readonly="1" />
+                   <field name="id_product" string="Product ID" readonly="1" />
+                  </group>
+              </xpath>
+           </field>
+    </record>
+
+    <record id="attributes_meli" model="ir.actions.act_window">
+        <field name="name">Product Attribute</field>
+        <field name="res_model">product.attribute</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('server_meli','!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Atribute
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_meli_patribu_confi" action="attributes_meli"
+              parent="odoo-mercadolibre.meli_main_list_sync" name="Product Atributes"/>
+
+</odoo>

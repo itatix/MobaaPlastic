@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_meli_export" model="ir.ui.view">
+        <field name="name">Meli Export</field>
+        <field name="model">meli.export</field>
+        <field name="priority">4</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Data To Server">
+                <group col="4">
+                    <field name="server" string="Instance"/>
+                    <field name="action" domain="[('export','=',True)]"/>
+                </group>
+                <notebook >
+                    <page string="Select the Items to Export"  >
+                        <field name="model" invisible="1"/>
+                        <field name="products"  domain = "[('server_meli','=',False)]"
+                               attrs="{'invisible': [('model', '!=', 'product.template')] }"/>
+                     </page>
+                </notebook>
+                <footer>
+                    <button name="export_export" string="Export"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_meli_export2" model="ir.ui.view">
+        <field name="name">Meli Export</field>
+        <field name="model">meli.export.unite</field>
+        <field name="priority">4</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Data To Server">
+                <group>
+                     <group>
+                           <field name="product" readonly="1"/>
+                           <field name="server" string="Instance"/>
+                           <field name="category" />
+                           <field name="category_children" domain="[('parent_id','=', category)]" />
+                     </group>
+                     <group>
+                           <field name="condition" />
+                           <field name="quantity" />
+                           <field name="buying_mode" />
+                           <field name="listing_type_id" />
+                     </group>
+                </group>
+                <footer>
+                    <button name="start_export" string="Export"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="action_view_meli_export" model="ir.actions.act_window">
+        <field name="name">Meli Export</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">meli.export</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_meli_export"/>
+        <field name="target">new</field>
+    </record>
+
+    <!--
+        <menuitem parent="meli_config_main" name="Export"
+              action="action_view_meli_export" id="menu_export_view_meli_synchro" />
+    -->
+
+
+</odoo>

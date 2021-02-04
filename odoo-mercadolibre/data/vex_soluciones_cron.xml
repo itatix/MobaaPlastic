@@ -1,0 +1,30 @@
+<odoo>
+    <record id="vex_soluciones_ir_cron_meli_syncro_product" model="ir.cron">
+        <field name="name">Auto Syncro Mercado Libre Products</field>
+        <field name="model_id" ref="model_meli_action_synchro"/>
+        <field name="state">code</field>
+        <field name="code">model.start_sync_products()</field>
+        <field name="interval_number">60</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="active">False</field>
+        <field name="argument">products</field>
+    </record>
+
+    <record id="vex_soluciones_ir_cron_meli_syncro_stock" model="ir.cron">
+        <field name="name">Auto Syncro Mercado Libre Stock</field>
+        <field name="model_id" ref="model_meli_stock"/>
+        <field name="state">code</field>
+        <field name="code">model.start_update_stock()</field>
+        <field name="interval_number">60</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="active">False</field>
+        <field name="argument">stock</field>
+    </record>
+
+
+
+</odoo>

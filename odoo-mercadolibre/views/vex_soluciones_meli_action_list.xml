@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista Kanba -->
+    <record model="ir.actions.act_window" id="action_list_sho_sho">
+            <field name="name">Dashboard</field>
+            <field name="res_model">meli.action.list</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Crea tu primer Mercado Libre List</p>
+            </field>
+    </record>
+
+    <record model="ir.ui.view" id="meli_restapi_list_kanban" >
+        <field name="name">MercadoLibre List Sync Kanban</field>
+        <field name="model">meli.action.list</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="argument"/>
+                <field name="automatic"/>
+                <field name="total_count"  />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card ">
+                            <div t-attf-class="oe_kanban_content">
+                                <t t-if="record.argument.raw_value == 'products'">
+                                    <img alt="Products" t-att-src="_s + '/odoo-mercadolibre/static/img/shopping-bags.png'"
+                                        class="o_kanban_image oe_kanban_avatar_smallbox" />
+                                </t>
+
+                                <t t-if="record.argument.raw_value == 'categories'">
+                                    <img alt="Products" t-att-src="_s + '/odoo-mercadolibre/static/img/categories.png'"
+                                        class="o_kanban_image oe_kanban_avatar_smallbox" />
+                                </t>
+
+                                <t t-if="record.argument.raw_value == 'customers'">
+                                    <img alt="Products" t-att-src="_s + '/odoo-mercadolibre/static/img/customers.png'"
+                                        class="o_kanban_image oe_kanban_avatar_smallbox" />
+                                </t>
+
+                                <t t-if="record.argument.raw_value == 'orders'">
+                                    <img alt="Products" t-att-src="_s + '/odoo-mercadolibre/static/img/shopping-cart.png'"
+                                         class="o_kanban_image oe_kanban_avatar_smallbox" />
+                                </t>
+
+                                <t t-if="record.argument.raw_value == 'questions'">
+                                    <img alt="Products" t-att-src="_s + '/odoo-mercadolibre/static/img/questions.png'"
+                                         class="o_kanban_image oe_kanban_avatar_smallbox" />
+                                </t>
+
+                                <t t-if="record.argument.raw_value == 'attributes'">
+                                    <img alt="Products" t-att-src="_s + '/odoo-mercadolibre/static/img/attributes.png'"
+                                         class="o_kanban_image oe_kanban_avatar_smallbox" />
+                                </t>
+
+                            </div>
+                            <strong><field name="name"/></strong>
+                            <br />
+                            <strong>Total Synchronized :     <field name="total_count"  /></strong>
+                            <i class="fa fa-history" attrs="{'invisible': [('automatic', '!=', True)]}"></i>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="meli_restapi_list_form" >
+        <field name="name">meli.action.list</field>
+        <field name="model">meli.action.list</field>
+        <field name="arch" type="xml">
+            <form string="Meli Server Form">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button class="oe_stat_button" type="action"
+                            name="%(odoo-mercadolibre.product_template_meli)d" icon="fa-cloud"
+                            attrs="{'invisible': [('argument', '!=', 'products')]}"
+                        >
+                            <div class="o_stat_info">
+                                <field name="total_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> <field name="argument"  readonly="1"/> </span>
+                            </div>
+                        </button>
+
+                        <button class="oe_stat_button" type="action"
+                            name="%(odoo-mercadolibre.categories_meli)d" icon="fa-cloud"
+                            attrs="{'invisible': [('argument', '!=', 'categories')]}">
+
+                            <div class="o_stat_info">
+                                <field name="total_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> <field name="argument"  readonly="1"/> </span>
+                            </div>
+                        </button>
+
+                        <button class="oe_stat_button" type="action"
+                            name="%(odoo-mercadolibre.customer_meli)d" icon="fa-cloud"
+                            attrs="{'invisible': [('argument', '!=', 'customers')]}">
+
+                            <div class="o_stat_info">
+                                <field name="total_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> <field name="argument"  readonly="1"/> </span>
+                            </div>
+                        </button>
+
+                        <button class="oe_stat_button" type="action"
+                            name="%(odoo-mercadolibre.orders_meli)d" icon="fa-cloud"
+                            attrs="{'invisible': [('argument', '!=', 'orders')]}">
+
+                            <div class="o_stat_info">
+                                <field name="total_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> <field name="argument"  readonly="1"/> </span>
+                            </div>
+                        </button>
+
+                        <button class="oe_stat_button" type="action"
+                            name="%(odoo-mercadolibre.action_meli_questions_tree)d" icon="fa-cloud"
+                            attrs="{'invisible': [('argument', '!=', 'questions')]}">
+
+                            <div class="o_stat_info">
+                                <field name="total_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> <field name="argument"  readonly="1"/> </span>
+                            </div>
+                        </button>
+
+                        <button class="oe_stat_button" type="action"
+                            name="%(odoo-mercadolibre.attributes_meli)d" icon="fa-cloud"
+                            attrs="{'invisible': [('argument', '!=', 'attributes')]}">
+
+                            <div class="o_stat_info">
+                                <field name="total_count" class="o_stat_value"/>
+                                <span class="o_stat_text"> <field name="argument"  readonly="1"/> </span>
+                            </div>
+                        </button>
+
+
+
+                        <button name="sync_products" type="object"
+                                class="oe_stat_button" icon="fa-spinner"
+                                attrs="{'invisible': [('argument', '!=', 'products')]}">
+                            Sync Products
+                        </button>
+
+                        <button name="sync_stock" type="object"
+                                class="oe_stat_button" icon="fa-spinner"
+                                attrs="{'invisible': [('argument', '!=', 'products')]}">
+                            Sync Stocks
+                        </button>
+
+
+
+                        <button name="sync_orders" type="object"
+                                class="oe_stat_button" icon="fa-spinner"
+                                attrs="{'invisible': [('argument', '!=', 'orders')]}">
+                            Sync Orders
+                        </button>
+
+                        <button name="sync_questions" type="object"
+                                class="oe_stat_button" icon="fa-spinner"
+                                attrs="{'invisible': [('argument', '!=', 'questions')]}">
+                            Sync Questions
+                        </button>
+
+                        <button name="sync_attributes" type="object"
+                                class="oe_stat_button" icon="fa-spinner"
+                                attrs="{'invisible': [('argument', '!=', 'attributes')]}">
+                            Sync Attributes
+                        </button>
+
+                    </div>
+                     <notebook>
+                        <page string="Setting Automatic Processe" attrs="{'invisible': [('automatic', '!=', True)]}">
+                            <group>
+                                <field name="active_cron" string="Active" />
+                                <field name="interval" />
+                                <field name="interval_type" />
+                                <field name="next_date_cron" readonly="1" />
+                            </group>
+                        </page>
+                        <page string="Setting Automatic Stock" attrs="{'invisible': [('argument', '!=', 'products')]}">
+                            <group>
+                                <field name="active_cron_stock" string="Active" />
+                                <field name="interval_stock" string="Interval"/>
+                                <field name="interval_type_stock"  string="Interval Type"/>
+                                <field name="next_date_cron_stock" readonly="1" />
+                            </group>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page string="Logs">
+                            <field name="automatic" invisible="1" />
+                            <field name="log"  domain="[('meli_list.argument','=',argument)]" readonly="True"/>
+                        </page>
+
+                    </notebook>
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+    
+    <menuitem action="action_list_sho_sho" id="meli_list_restapi"
+              parent="odoo-mercadolibre.meli_config" sequence="0"/>
+    
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="meli_config_main" name="Action" parent="meli_config"/>
+
+    <record id="view_meli_synchro" model="ir.ui.view">
+        <field name="name">Import / Update</field>
+        <field name="model">meli.action.synchro</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Data To Server">
+                <group col="4">
+                    <field name="server"/>
+                    <field name="action" widget="many2many_tags" domain = "[('importv','=',True)]"/>
+                </group>
+                <footer>
+                    <button name="meli_import_thread" string="Import"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_view_meli_synchro" model="ir.actions.act_window">
+        <field name="name">Import</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">meli.action.synchro</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_meli_synchro"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem parent="meli_config_main" name="Import / Update"
+              action="action_view_meli_synchro" id="menu_action_view_meli_synchro" />
+
+</odoo>

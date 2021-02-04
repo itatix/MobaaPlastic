@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Inicio Herencia Producto -->
+    <record id="Producto_meli_tree_herencias" model="ir.ui.view" >
+           <field name="name">Product.view</field>
+           <field name="model">product.template</field>
+           <field name="inherit_id" ref="product.product_template_tree_view"/>
+           <field name="arch" type="xml">
+               <xpath expr="//tree" position="attributes">
+	                 <attribute name="decoration-danger">active==False</attribute>
+               </xpath>
+              <xpath expr="//field[@name='name']" position="after">
+                   <field name="server_meli" string="Meli Server" />
+                   <field name="id_app" string="Id Meli"  />
+              </xpath>
+           </field>
+    </record>
+
+    <record id="Producto_meli_kanvan_herencia" model="ir.ui.view">
+        <field name="name">Product.Kanvan.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_kanban_details']" position="after">
+                <div t-if="record.server_meli.value">
+                    <i class="fa fa-fw fa-spinner"></i>
+                    <field name="server_meli"  />
+                    <field name="active"  invisible="1"/>
+                    <small  t-if="record.product_condition.value">[<field name="product_condition"/>]</small>
+                    <span class="text-danger" attrs="{'invisible': [('active', '!=', False)]}">Archived</span>
+                 </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="Personal_meli_FORM_herenciaX2" model="ir.ui.view">
+           <field name="name">Product.Form</field>
+           <field name="model">product.template</field>
+           <field name="inherit_id" ref="product.product_template_only_form_view"/>
+           <field name="arch" type="xml">
+               <xpath expr="//field[@name='is_published']" position="after">
+
+               <button class="oe_stat_button" type="action"
+                            name="%(odoo-mercadolibre.action_meli_questions_two)d" icon="fa-question"
+                            context="{'default_product_id': active_id, 'search_default_draft': 1, 'search_default_sent': 1}"
+                             attrs="{'invisible': [('server_meli', '=', False)]}"
+                            >
+                        <div class="o_stat_info">
+                            <field name="questions_count" class="o_stat_value"/>
+                            <span class="o_stat_text"> Question(s) </span>
+                        </div>
+               </button>
+
+               <button name="fun_sync_up" type="object" class="oe_stat_button"
+                           attrs="{'invisible': [('server_meli', '!=', False)]}" icon="fa-upload">
+                                Publish ML
+               </button>
+
+               </xpath>
+
+           	   <xpath expr="//page[@name='general_information']" position="before">
+                   <page name="Information_ML" string="Mercado Libre Information" >
+                       <group>
+                           <field name="server_meli" string="Meli Server" readonly="1"/>
+                           <field name="id_app"  readonly="1" />
+                           <field name="description" string="Description"  />
+                           <field name="brand" string="Product Brand"   />
+                           <field name="public_categ_ids"    widget="many2many_tags"  />
+                           <field name="product_condition" string="Product Condition"   />
+                           <field name="url_image" string="Image URL" widget="url"  />
+                           <field name="permalink" readonly="1"  widget="url"/>
+                           <field name="product_template_image_ids"
+                                  class="o_website_sale_image_list"
+                                  context="{'default_name': name}"
+                                  mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1" readonly="1"/>
+                       </group>
+                   </page>
+	           </xpath>
+
+           </field>
+    </record>
+
+
+
+    <record id="product_template_meli" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="domain">[('server_meli','!=', False),'|',('active','!=', False),('active','!=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Product Template
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_template_confi_meli" action="product_template_meli"
+              parent="odoo-mercadolibre.meli_main_list_sync" name="Products"/>
+</odoo>
